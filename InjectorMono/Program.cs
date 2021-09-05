@@ -13,12 +13,14 @@ namespace InjectorMono
         {
             if (Process.GetProcessesByName("Stay Alive").Length != 0)
             {
+                byte[] rawAssembly = File.ReadAllBytes("DesireProAlive.dll");
                 IntPtr remoteAssembly = IntPtr.Zero;
                 Process process = Process.GetProcesses().FirstOrDefault(p => p.ProcessName.Equals("Stay Alive", StringComparison.OrdinalIgnoreCase));
                 DLL dll = new DLL();
                 handle = OpenProcess(ProcessAccessFlags.All | ProcessAccessFlags.VirtualMemoryRead | ProcessAccessFlags.VirtualMemoryWrite | ProcessAccessFlags.VirtualMemoryOperation, false, process.Id);
                 GetMonoModule(handle, out mono);
-                new Program().Inject(DLL.dll, "A", "B", "C");
+                new Program().Inject(DLL.dll,//rawAssembly,
+                                     "A", "B", "C");
                 return;
             }
             Console.WriteLine("Open Stay Alive BRO...");
