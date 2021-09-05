@@ -1,0 +1,7 @@
+C:\Users\dfffa\Documents\198\InjectorMono\InjectorMono\bin\Debug\InjectorMono.exe.config
+C:\Users\dfffa\Documents\198\InjectorMono\InjectorMono\bin\Debug\InjectorMono.exe
+C:\Users\dfffa\Documents\198\InjectorMono\InjectorMono\bin\Debug\InjectorMono.pdb
+C:\Users\dfffa\Documents\198\InjectorMono\InjectorMono\obj\Debug\InjectorMono.csprojAssemblyReference.cache
+C:\Users\dfffa\Documents\198\InjectorMono\InjectorMono\obj\Debug\InjectorMono.csproj.CoreCompileInputs.cache
+C:\Users\dfffa\Documents\198\InjectorMono\InjectorMono\obj\Debug\InjectorMono.exe
+C:\Users\dfffa\Documents\198\InjectorMono\InjectorMono\obj\Debug\InjectorMono.pdb
