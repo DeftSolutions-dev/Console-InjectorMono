@@ -151,12 +151,8 @@ namespace InjectorMono
         public void Inject(byte[] rawAssembly, string @namespace, string className, string methodName)
         {
             foreach (ExportedFunction ef in GetExportedFunctions(handle, mono))
-            {
                 if (Exports.ContainsKey(ef.Name))
-                {
                     Exports[ef.Name] = ef.Address;
-                }
-            }
             Domain = Execute(Exports["mono_get_root_domain"]);
             IntPtr statusPtr = Allocate(4);
             IntPtr rawImg = Execute(Exports["mono_image_open_from_data"], AllocateAndWrite(rawAssembly), (IntPtr)rawAssembly.Length, (IntPtr)1, statusPtr);
@@ -180,19 +176,15 @@ namespace InjectorMono
         }
         private byte[] Asm(IntPtr functionPtr, IntPtr retValPtr, IntPtr[] args)
         {
-            List<byte> asm = new List<byte>();
+            var asm = new List<byte>();
             if (attach)
             {
                 if ((int)Domain < 128)
-                {
                     asm.Add(0x6A);
-                }
-                else { asm.Add(0x68); }
+                else asm.Add(0x68); 
                 if ((int)Domain <= 255)
-                {
                     asm.AddRange(new[] { (byte)Domain });
-                }
-                else { asm.AddRange(BitConverter.GetBytes((int)Domain)); }
+                else asm.AddRange(BitConverter.GetBytes((int)Domain)); 
                 asm.Add(0xB8);
                 asm.AddRange(BitConverter.GetBytes((int)Exports["mono_thread_attach"]));
                 asm.AddRange(new byte[] { 0xFF, 0xD0 }); asm.AddRange(new byte[] { 0x83, 0xC4 });
@@ -213,7 +205,7 @@ namespace InjectorMono
         {
             IntPtr[] ptrs = new IntPtr[0];
             EnumProcessModulesEx(handle, ptrs, 0, out int bytesNeeded, 0x03);
-            int count = bytesNeeded / 4;
+            var count = bytesNeeded / 4;
             ptrs = new IntPtr[count];
             EnumProcessModulesEx(handle, ptrs, bytesNeeded, out bytesNeeded, 0x03);
             for (int i = 0; i < count; i++)
@@ -223,9 +215,7 @@ namespace InjectorMono
                 if (path.ToString().IndexOf("mono", StringComparison.OrdinalIgnoreCase) > -1)
                 {
                     GetModuleInformation(handle, ptrs[i], out MODULEINFO info, (uint)(4 * ptrs.Length));
-
                     var funcs = GetExportedFunctions(handle, info.lpBaseOfDll);
-
                     if (funcs.Any(f => f.Name == "mono_get_root_domain"))
                     {
                         monoModule = info.lpBaseOfDll;
@@ -258,9 +248,7 @@ namespace InjectorMono
                     yield return new ExportedFunction(name, address);
             }
             foreach (var kvp in all)
-            {
                 VirtualFreeEx(Program.handle, kvp.Key, kvp.Value, MEM_DECOMMIT);
-            }
         }
     }
 }
