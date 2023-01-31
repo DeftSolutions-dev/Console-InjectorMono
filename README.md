@@ -1,3 +1,2 @@
 # Console-InjectorMono
 Инжектор Моно на Unity game.
-https://goo-gl.su/DesirePro hmm...
